@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workbook Prompt Constructor — 1–4 класс</title>
+  <meta name="description" content="Конструктор промптов для генерации рабочих тетрадей по скриншотам учебника." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">AI • WORKBOOK BUILDER</p>
+        <h1>Конструктор промптов для рабочих тетрадей</h1>
+        <p class="lead">
+          Здесь собирается промпт по постоянной схеме: фото 1 и фото 2 — это скриншоты учебника для содержания,
+          а фото 3 — мудборд для персонажей и общей рисовки. На выходе ты получаешь методически связанный промпт
+          для тетради: 10 вертикальных страниц, 2–3 задания на каждой, без однотипных упражнений.
+        </p>
+      </div>
+      <div class="hero-badge">
+        <span>1–4</span>
+        <small>класс</small>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel form-panel">
+        <div class="section-title">
+          <span class="step">01</span>
+          <div>
+            <h2>Параметры тетради</h2>
+            <p>Базовые настройки, которые войдут в готовый промпт.</p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <label class="field">
+            <span>Класс</span>
+            <select id="grade">
+              <option value="1">1 класс</option>
+              <option value="2">2 класс</option>
+              <option value="3" selected>3 класс</option>
+              <option value="4">4 класс</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Фокус</span>
+            <select id="focus">
+              <option value="mixed" selected>Смешанный формат</option>
+              <option value="lexis">Лексика</option>
+              <option value="grammar">Грамматика</option>
+              <option value="reading">Чтение</option>
+              <option value="speaking">Говорение</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Страниц</span>
+            <input id="pages" type="number" min="6" max="16" value="10" />
+          </label>
+
+          <label class="field">
+            <span>Заданий на странице</span>
+            <select id="tasksPerPage">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="2-3" selected>2–3, чередовать</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="mini-note grade-note">
+          <strong>1 класс:</strong> конструктор автоматически включает максимально простые форматы: картинки, соединение, обводка, выбор, раскрашивание по условию, устные микроответы и минимум письма.
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title compact">
+          <span class="step">02</span>
+          <div>
+            <h2>Фото №3 — визуальный мудборд</h2>
+            <p>Его стиль, рисовку и персонажей нейросеть должна переносить в рабочую тетрадь.</p>
+          </div>
+        </div>
+
+        <div class="mini-note">
+          <strong>Разделяем источники:</strong><br>
+          скриншоты учебника = только содержание и уровень;<br>
+          фото №3 = стиль, палитра, рисовка, персонажи и визуальная атмосфера.
+          Персонажей из учебника использовать нельзя.
+        </div>
+
+        <label class="field">
+          <span>Дополнение к мудборду — необязательно</span>
+          <textarea id="customStyle" rows="3" placeholder="Например: больше белого пространства, крупнее поля для письма, использовать двух главных персонажей на протяжении всей тетради..."></textarea>
+        </label>
+
+        <div class="fixed-system-box">
+          <strong>Постоянная схема источников</strong>
+          <ul>
+            <li><b>Фото 1</b> — скриншот(ы) учебника</li>
+            <li><b>Фото 2</b> — скриншот(ы) учебника</li>
+            <li><b>Фото 3</b> — визуальный мудборд</li>
+          </ul>
+          <p><b>Фото 1 + 2</b> дают тему, лексику, грамматику, речевые модели и уровень сложности. <b>Фото 3</b> задаёт персонажей, рисовку, палитру и общее оформление.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title compact">
+          <span class="step">03</span>
+          <div>
+            <h2>Как расширять материал</h2>
+            <p>Учебник остаётся ядром, а новые задания не должны уходить в другую тему.</p>
+          </div>
+        </div>
+
+        <div class="segmented" id="expansionControl">
+          <button type="button" data-value="careful">Бережно</button>
+          <button type="button" data-value="balanced" class="active">Сбалансированно</button>
+          <button type="button" data-value="creative">Смелее</button>
+        </div>
+
+        <div class="grid two">
+          <label class="field">
+            <span>Язык инструкций ученику</span>
+            <select id="instructionLanguage">
+              <option value="English" selected>English</option>
+              <option value="Russian">Русский</option>
+              <option value="Bilingual">Двуязычно</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Ключи</span>
+            <select id="answerKeys">
+              <option value="no" selected>Без ключей</option>
+              <option value="separate">Ключи отдельным блоком</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Что дополнительно учесть — необязательно</span>
+          <textarea id="extra" rows="4" placeholder="Например: минимизировать письмо, добавить больше парной речи, повторить лексику прошлого юнита, не использовать вырезание и клей..."></textarea>
+        </label>
+
+        <details class="optional">
+          <summary>Дополнительные поля</summary>
+          <div class="grid two">
+            <label class="field">
+              <span>Подпись / watermark</span>
+              <input id="watermark" type="text" placeholder="@freshteacher" />
+            </label>
+            <label class="field">
+              <span>Номер урока</span>
+              <input id="lesson" type="text" placeholder="Lesson 3" />
+            </label>
+          </div>
+        </details>
+
+        <div class="actions">
+          <button id="generateBtn" class="primary">Собрать промпт</button>
+          <button id="rerollBtn" class="secondary" disabled>Другой вариант заданий</button>
+        </div>
+      </section>
+
+      <section class="panel output-panel">
+        <div class="output-head">
+          <div>
+            <p class="eyebrow">READY TO PASTE</p>
+            <h2>Готовый промпт</h2>
+          </div>
+          <div class="output-actions">
+            <button id="copyBtn" class="ghost" disabled>Копировать</button>
+            <button id="downloadBtn" class="ghost" disabled>Скачать .txt</button>
+          </div>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">✦</div>
+          <h3>Сначала настрой тетрадь</h3>
+          <p>После генерации здесь появится подробный промпт и постраничная структура.</p>
+        </div>
+
+        <div id="resultWrap" class="result-wrap hidden">
+          <div class="mini-note">
+            <strong>Как использовать:</strong> прикрепи скриншоты страниц учебника к сообщению в нейросети,
+            затем вставь этот промпт целиком.
+          </div>
+
+          <div id="outline" class="outline"></div>
+
+          <label class="prompt-box">
+            <span>Промпт</span>
+            <textarea id="promptOutput" readonly></textarea>
+          </label>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Работает локально в браузере • без загрузки скриншотов на сайт</span>
+      <span id="seedLabel"></span>
+    </footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
